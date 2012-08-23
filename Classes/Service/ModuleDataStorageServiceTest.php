@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\CMS\Beuser\ViewHelpers;
+namespace TYPO3\CMS\Beuser\Service;
 
 /***************************************************************
  *  Copyright notice
@@ -26,23 +26,36 @@ namespace TYPO3\CMS\Beuser\ViewHelpers;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 /**
- * Displays sprite icon identified by iconName key
+ * Test case for class Tx_Beuser_Service_ModuleDataStorageService
  *
  * @author Felix Kopp <felix-source@phorax.com>
+ * @author Nikolas Hagelstein <nikolas.hagelstein@gmail.com>
  * @package TYPO3
  * @subpackage beuser
  */
-class SpriteManagerIconViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Be\AbstractBackendViewHelper {
+class ModuleDataStorageServiceTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	/**
-	 * Prints sprite icon html for $iconName key
-	 *
-	 * @param string $iconName
-	 * @param array $options
-	 * @return string
+	 * @var \TYPO3\CMS\Beuser\Service\ModuleDataStorageService
 	 */
-	public function render($iconName, $options = array()) {
-		return \TYPO3\CMS\Backend\Utility\IconUtility::getSpriteIcon($iconName, $options);
+	protected $fixture;
+
+	public function setUp() {
+		$this->fixture = $this->objectManager->get('TYPO3\\CMS\\Beuser\\Service\\ModuleDataStorageService');
+	}
+
+	public function tearDown() {
+		unset($this->fixture);
+	}
+
+	/**
+	 * @test
+	 */
+	public function loadModuleDataReturnsModuleDataObjectForEmptyModuleData() {
+		// Simulate empty module data
+		unset($GLOBALS['BE_USER']->uc['moduleData'][\TYPO3\CMS\Beuser\Service\ModuleDataStorageService::KEY]);
+		$result = $this->fixture->loadModuleData();
+		$this->assertInstanceOf('TYPO3\\CMS\\Beuser\\Domain\\Model\\ModuleData', $result);
 	}
 
 }

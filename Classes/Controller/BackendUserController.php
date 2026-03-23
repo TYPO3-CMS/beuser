@@ -23,6 +23,7 @@ use TYPO3\CMS\Backend\Module\ModuleData;
 use TYPO3\CMS\Backend\Routing\UriBuilder as BackendUriBuilder;
 use TYPO3\CMS\Backend\Template\Components\ButtonBar;
 use TYPO3\CMS\Backend\Template\Components\ComponentFactory;
+use TYPO3\CMS\Backend\Template\Enum\ModuleLayout;
 use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Beuser\Domain\Dto\BackendUserGroup;
@@ -107,6 +108,7 @@ class BackendUserController extends ActionController
         $this->moduleData = $this->request->getAttribute('moduleData');
         $this->moduleTemplate = $this->moduleTemplateFactory->create($this->request);
         $this->moduleTemplate->setTitle(LocalizationUtility::translate('beuser.modules.user_management:title'));
+        $this->moduleTemplate->setLayout(ModuleLayout::NORMAL);
         $this->moduleTemplate->setFlashMessageQueue($this->getFlashMessageQueue());
     }
 
